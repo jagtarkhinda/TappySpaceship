@@ -150,15 +150,29 @@ public class GameEngine extends SurfaceView implements Runnable {
     boolean gameOver = false;
 
     public void updatePositions() {
+
         // @TODO: Update position of player
         // 1. move the player downwards by default and stop at bottom
         if(player.getyPosition()+ player.getImage().getHeight() <= this.screenHeight -200) {
             this.player.setyPosition(this.player.getyPosition() + PLAYER_SPEED);
             this.player.getHitbox().top = this.player.getHitbox().top + PLAYER_SPEED;
             this.player.getHitbox().bottom = this.player.getHitbox().bottom + PLAYER_SPEED;
+
         }
-        
+
+
         // @TODO: Update position of enemy ships
+
+        //move the enemy to the left
+
+        this.enemy1.setxPosition(this.enemy1.getxPosition() - PLAYER_SPEED);
+        Log.d("enemy", String.valueOf(this.enemy1.getxPosition()));
+
+        // 2. move the enemy hitbox
+
+        this.enemy1.getHitbox().left = this.enemy1.getHitbox().left - PLAYER_SPEED;
+        this.enemy1.getHitbox().right = this.enemy1.getHitbox().right - PLAYER_SPEED;
+
 
 
         // @TODO: Collision detection between player and enemy
@@ -205,10 +219,10 @@ public class GameEngine extends SurfaceView implements Runnable {
             //@TODO: Draw the enemy
 
             //enemy 1
-            canvas.drawBitmap(this.enemy1.getImage(), this.screenWidth - 500, 120, paintbrush);
+            canvas.drawBitmap(this.enemy1.getImage(), this.enemy1.getxPosition(), this.enemy1.getyPosition(), paintbrush);
 
             //enemy 2
-            canvas.drawBitmap(this.enemy2.getImage(), this.screenWidth - 500, this.screenHeight - 400, paintbrush);
+            canvas.drawBitmap(this.enemy2.getImage(), this.enemy2.getxPosition(), this.enemy2.getyPosition(), paintbrush);
 
             // DRAW THE PLAYER HITBOX
             // ------------------------
