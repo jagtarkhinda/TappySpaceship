@@ -163,7 +163,7 @@ public class GameEngine extends SurfaceView implements Runnable {
 
         // @TODO: Update position of enemy ships
 
-        //move the enemy to the left
+        //move the enemy to the left 
 
         this.enemy1.setxPosition(this.enemy1.getxPosition() - PLAYER_SPEED);
         Log.d("enemy", String.valueOf(this.enemy1.getxPosition()));
