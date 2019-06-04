@@ -209,7 +209,7 @@ public class GameEngine extends SurfaceView implements Runnable {
             this.enemy2.setHitbox(hitbox2);
         }
 
-        if ((player.getHitbox().intersect(this.enemy1.getHitbox())) || (player.getHitbox().intersect(this.enemy2.getHitbox()))) {
+        if ((this.player.getHitbox().intersect(this.enemy1.getHitbox())) || (this.player.getHitbox().intersect(this.enemy2.getHitbox()))) {
             Log.d(TAG, "COLLISION!!!!!");
             this.lives = this.lives - 1;
             Log.d(TAG, "Lives remaining: " + this.lives);
@@ -220,6 +220,16 @@ public class GameEngine extends SurfaceView implements Runnable {
                 this.gameOver = true;
                 return;
             }
+
+            //fixing player hitbox misposition
+
+            Rect phitbox = new Rect(this.player.getxPosition(),
+                    this.player.getyPosition(),
+                    this.player.getxPosition() + this.player.getImage().getWidth(),
+                    this.player.getyPosition() + this.player.getImage().getHeight()
+            );
+
+            this.player.setHitbox(phitbox);
 
             //resetting enemy position when it collides with player
             //enemy1
