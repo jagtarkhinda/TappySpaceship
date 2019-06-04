@@ -151,12 +151,13 @@ public class GameEngine extends SurfaceView implements Runnable {
 
     public void updatePositions() {
         // @TODO: Update position of player
-        // 1. move the player
-        this.player.setxPosition(this.player.getxPosition() + PLAYER_SPEED);
-        // 2. move the hitbox
-        this.player.getHitbox().left = this.player.getHitbox().left + PLAYER_SPEED;
-        this.player.getHitbox().right = this.player.getHitbox().right + PLAYER_SPEED;
-
+        // 1. move the player downwards by default and stop at bottom
+        if(player.getyPosition()+ player.getImage().getHeight() <= this.screenHeight -200) {
+            this.player.setyPosition(this.player.getyPosition() + PLAYER_SPEED);
+            this.player.getHitbox().top = this.player.getHitbox().top + PLAYER_SPEED;
+            this.player.getHitbox().bottom = this.player.getHitbox().bottom + PLAYER_SPEED;
+        }
+        
         // @TODO: Update position of enemy ships
 
 
