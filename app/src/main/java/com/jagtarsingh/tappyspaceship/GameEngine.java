@@ -311,6 +311,10 @@ public class GameEngine extends SurfaceView implements Runnable {
         //@TODO: What should happen when person touches the screen?
         if (userAction == MotionEvent.ACTION_DOWN) {
             Log.d(TAG, "Person tapped the screen");
+            this.player.setyPosition(this.player.getyPosition() - PLAYER_SPEED*3);
+            this.player.getHitbox().top = this.player.getHitbox().top - PLAYER_SPEED*3;
+            this.player.getHitbox().bottom = this.player.getHitbox().bottom - PLAYER_SPEED*3;
+
         }
         else if (userAction == MotionEvent.ACTION_UP) {
             Log.d(TAG, "Person lifted finger");
