@@ -153,7 +153,7 @@ public class GameEngine extends SurfaceView implements Runnable {
 
         // @TODO: Update position of player
         // 1. move the player downwards by default and stop at bottom
-        if(player.getyPosition()+ player.getImage().getHeight() <= this.screenHeight -200) {
+        if (player.getyPosition() + player.getImage().getHeight() <= this.screenHeight - 200) {
             this.player.setyPosition(this.player.getyPosition() + PLAYER_SPEED);
             this.player.getHitbox().top = this.player.getHitbox().top + PLAYER_SPEED;
             this.player.getHitbox().bottom = this.player.getHitbox().bottom + PLAYER_SPEED;
@@ -166,6 +166,7 @@ public class GameEngine extends SurfaceView implements Runnable {
         //move the enemy to the left
 
         this.enemy1.setxPosition(this.enemy1.getxPosition() - PLAYER_SPEED);
+        this.enemy2.setxPosition(this.enemy2.getxPosition() - PLAYER_SPEED);
         Log.d("enemy", String.valueOf(this.enemy1.getxPosition()));
 
         // 2. move the enemy hitbox
@@ -173,15 +174,18 @@ public class GameEngine extends SurfaceView implements Runnable {
         this.enemy1.getHitbox().left = this.enemy1.getHitbox().left - PLAYER_SPEED;
         this.enemy1.getHitbox().right = this.enemy1.getHitbox().right - PLAYER_SPEED;
 
+        this.enemy2.getHitbox().left = this.enemy2.getHitbox().left - PLAYER_SPEED;
+        this.enemy2.getHitbox().right = this.enemy2.getHitbox().right - PLAYER_SPEED;
 
 
         // @TODO: Collision detection between player and enemy
 
         //  between enemy and wall
-        if(enemy1.getxPosition()+ enemy1.getImage().getWidth() <= 0)
-        {
+        if (enemy1.getxPosition() + enemy1.getImage().getWidth() <= 0) {
             // restart enemy from starting position
-            this.enemy1.setxPosition(this.screenWidth-500);
+
+            //enemy1
+            this.enemy1.setxPosition(this.screenWidth - 500);
             this.enemy1.setyPosition(120);
 
 
@@ -191,9 +195,21 @@ public class GameEngine extends SurfaceView implements Runnable {
                     this.enemy1.getyPosition() + this.enemy1.getImage().getHeight()
             );
             this.enemy1.setHitbox(hitbox);
+
+            //enemy2
+            this.enemy2.setxPosition(this.screenWidth - 500);
+            this.enemy2.setyPosition(this.screenHeight - 400);
+
+
+            Rect hitbox2 = new Rect(this.enemy2.getxPosition(),
+                    this.enemy2.getyPosition(),
+                    this.enemy2.getxPosition() + this.enemy2.getImage().getWidth(),
+                    this.enemy2.getyPosition() + this.enemy2.getImage().getHeight()
+            );
+            this.enemy2.setHitbox(hitbox2);
         }
 
-        if (player.getHitbox().intersect(this.enemy1.getHitbox()) || player.getHitbox().intersect(this.enemy2.getHitbox())) {
+        if ((player.getHitbox().intersect(this.enemy1.getHitbox())) || (player.getHitbox().intersect(this.enemy2.getHitbox()))) {
             Log.d(TAG, "COLLISION!!!!!");
             this.lives = this.lives - 1;
             Log.d(TAG, "Lives remaining: " + this.lives);
@@ -205,18 +221,32 @@ public class GameEngine extends SurfaceView implements Runnable {
                 return;
             }
 
+            //resetting enemy position when it collides with player
+            //enemy1
+            this.enemy1.setxPosition(this.screenWidth - 500);
+            this.enemy1.setyPosition(120);
 
-            // restart player from starting position
-            this.player.setxPosition(100);
-            this.player.setyPosition(120);
+            Rect hitbox = new Rect(this.enemy1.getxPosition(),
+                    this.enemy1.getyPosition(),
+                    this.enemy1.getxPosition() + this.enemy1.getImage().getWidth(),
+                    this.enemy1.getyPosition() + this.enemy1.getImage().getHeight()
+            );
+            this.enemy1.setHitbox(hitbox);
+            //......................
 
-            // restart hitbox
-            this.player.getHitbox().left = this.player.getxPosition();
-            this.player.getHitbox().top = this.player.getyPosition();
-            this.player.getHitbox().right = this.player.getxPosition()+this.player.getImage().getWidth();
-            this.player.getHitbox().bottom = this.player.getxPosition() + player.getImage().getHeight();
+            //enemy2
+            this.enemy2.setxPosition(this.screenWidth - 500);
+            this.enemy2.setyPosition(this.screenHeight - 400);
+
+            Rect hitbox2 = new Rect(this.enemy2.getxPosition(),
+                    this.enemy2.getyPosition(),
+                    this.enemy2.getxPosition() + this.enemy2.getImage().getWidth(),
+                    this.enemy2.getyPosition() + this.enemy2.getImage().getHeight()
+            );
+
+            this.enemy2.setHitbox(hitbox2);
+
         }
-
     }
 
     public void redrawSprites() {
