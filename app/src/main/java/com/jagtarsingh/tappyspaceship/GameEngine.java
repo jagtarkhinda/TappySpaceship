@@ -163,7 +163,7 @@ public class GameEngine extends SurfaceView implements Runnable {
 
         // @TODO: Update position of enemy ships
 
-        //move the enemy to the left 
+        //move the enemy to the left
 
         this.enemy1.setxPosition(this.enemy1.getxPosition() - PLAYER_SPEED);
         Log.d("enemy", String.valueOf(this.enemy1.getxPosition()));
@@ -176,6 +176,23 @@ public class GameEngine extends SurfaceView implements Runnable {
 
 
         // @TODO: Collision detection between player and enemy
+
+        //  between enemy and wall
+        if(enemy1.getxPosition()+ enemy1.getImage().getWidth() <= 0)
+        {
+            // restart enemy from starting position
+            this.enemy1.setxPosition(this.screenWidth-500);
+            this.enemy1.setyPosition(120);
+
+
+            Rect hitbox = new Rect(this.enemy1.getxPosition(),
+                    this.enemy1.getyPosition(),
+                    this.enemy1.getxPosition() + this.enemy1.getImage().getWidth(),
+                    this.enemy1.getyPosition() + this.enemy1.getImage().getHeight()
+            );
+            this.enemy1.setHitbox(hitbox);
+        }
+
         if (player.getHitbox().intersect(this.enemy1.getHitbox()) || player.getHitbox().intersect(this.enemy2.getHitbox())) {
             Log.d(TAG, "COLLISION!!!!!");
             this.lives = this.lives - 1;
